@@ -8,7 +8,7 @@ const app = express()
 const server = createServer(app) /* Create http server */
 
 
-io.on('connection',() => { /* when the socket recieve a connection, then it do this */
+io.on('connection',() => { /* when the socket receive a connection, then it do this */
     console.log('a user has connected')
 })
 
