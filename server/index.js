@@ -14,6 +14,10 @@ io.on('connection',(socket) => { /* when the socket receive a connection, then d
 
     socket.on('disconnect', () => { /* when the socket receive a disconnection, then do this */
         console.log('a user has disconnected')})
+
+    socket.on('chat message',(msg) => {
+        io.emit('chat message', msg) /* Send the message to all the sockets connected */
+    })
 })
 
 app.use(logger('dev')) /* Get info about the status of the server */

@@ -33,14 +33,19 @@
             height: 100%;
             scroll-behavior: smooth;
             padding-bottom: 48px;
+            color: #fff;
+            margin-left: 20px;
+            margin-top: 20px;
+            border-radius: 10px;
+            /*  max-width: 100px;*/
         }
     
         #messages>li {
             padding: .5rem 1rem;
         }
     
-        #messages>li:nth-child(odd) {
-            background: #000;
+        #messages>li {
+            background: #09f;
         }
     
         #chat {
@@ -87,13 +92,31 @@
         }
     </style>
     <script type="module">
-        import { io } from 'https://cdn.socket.io/4.3.2/socket.io.esm.min.js'
-        const socket = io()
+        import { io } from 'https://cdn.socket.io/4.3.2/socket.io.esm.min.js' /* Import io */
+        const socket = io() /* Create Socket */
+        const form = document.getElementById('form')/* Get the form */
+        const input = document.getElementById('input') /* Get the input */
+        const messages = document.getElementById('messages') /* Get the messages */
+        
+        socket.on('chat message',(msg) =>{
+            const item = `<li>${msg}</li>` /* Create a list item */
+            messages.insertAdjacentHTML('beforeend',item) /* Add the list item to the messages */
+        })
+        
+        
+        form.addEventListener('submit',(e) =>{
+            e.preventDefault()
+            if (input.value) {
+                socket.emit('chat message', input.value) /* Emit chat message */
+                input.value = '' /* Clear the input */
+            }
+        }) 
     </script>
 </head>
 
 <body>
     <section id="chat">
+        <ul id = "messages"></ul>
         <form id="form">
             <input type="text" name = "message" id="input" placeholder="Type a message" autocomplete="off">
             <button type="submit">Send</button>
