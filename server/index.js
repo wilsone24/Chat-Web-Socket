@@ -3,6 +3,8 @@ import logger from 'morgan'
 import { Server } from 'socket.io'
 import { createServer } from 'node:http'
 
+
+
 const port = process.env.PORT ?? 3000
 const app = express()
 const server = createServer(app) /* Create http server */
@@ -27,8 +29,6 @@ app.get('/', (req, res) => {
     res.sendFile(process.cwd() + '/client/index.html')
 })
 
-server.listen(port, () => { /* Listen a specific port in local machine */
+server.listen(port, () => { /* Listen a specific port in local machine */ 
     console.log(`Server running at:${port}`)
 })
-
-
