@@ -24,7 +24,11 @@
             padding: 36px 36px 100px 36px;
             grid-template-rows: 1fr;
         }
-    
+        
+        h1 {
+            text-align: center;
+        }
+
         #messages {
             list-style-type: none;
             margin: 0;
@@ -42,7 +46,7 @@
             background: #09f;
             
             padding: .5rem 1rem;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
             border-radius: 10px;
             max-width: 170px;
         }
@@ -53,9 +57,9 @@
     
         #chat {
             border: 1px solid #ccc;
-            border-radius: 4px;
+            border-radius: 10px;
             overflow: hidden;
-            width: 350px;
+            width: 400px;
             height: 100%;
             position: relative;
         }
@@ -92,12 +96,28 @@
     
         #form>button:hover {
             background: #0cf;
+
+        }
+        button{
+            cursor: pointer;
+        }
+        small {
+            color: #ffff;
+            font-size: 12px;
+            border-bottom: 1px solid #ccc; /* Ajusta el color y el grosor del borde según tus preferencias */
+            font-weight: bold;
+        }
+
+        p {
+            margin-top: 0px;
+            margin-bottom: 0px;
         }
     </style>
     <script type="module">
         import { io } from 'https://cdn.socket.io/4.3.2/socket.io.esm.min.js' /* Import io */
         const socket = io({
             auth: {
+                username: '<%= usuario %>', /* Send username */
                 serverOffset:0
             }
         }) /* Create Socket */
@@ -105,8 +125,11 @@
         const input = document.getElementById('input') /* Get the input */
         const messages = document.getElementById('messages') /* Get the messages */
         
-        socket.on('chat message',(msg,serverOffset) =>{
-            const item = `<li>${msg}</li>` /* Create a list item */
+        socket.on('chat message',(msg,serverOffset,username) =>{
+            const item = `<li> 
+            <small>${username}</small>
+            <p>${msg}</p>
+            </li>`
             messages.insertAdjacentHTML('beforeend',item) /* Add the list item to the messages */
             socket.auth.serverOffset = serverOffset
             messages.scrollTop = messages.scrollHeight /* Scroll to the bottom */
@@ -124,6 +147,7 @@
 </head>
 
 <body>
+    <h1>Hola, <%= usuario %>!</h1>
     <section id="chat">
         <ul id = "messages"></ul>
         <form id="form">
