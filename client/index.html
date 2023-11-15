@@ -96,14 +96,20 @@
     </style>
     <script type="module">
         import { io } from 'https://cdn.socket.io/4.3.2/socket.io.esm.min.js' /* Import io */
-        const socket = io() /* Create Socket */
+        const socket = io({
+            auth: {
+                serverOffset:0
+            }
+        }) /* Create Socket */
         const form = document.getElementById('form')/* Get the form */
         const input = document.getElementById('input') /* Get the input */
         const messages = document.getElementById('messages') /* Get the messages */
         
-        socket.on('chat message',(msg) =>{
+        socket.on('chat message',(msg,serverOffset) =>{
             const item = `<li>${msg}</li>` /* Create a list item */
             messages.insertAdjacentHTML('beforeend',item) /* Add the list item to the messages */
+            socket.auth.serverOffset = serverOffset
+            messages.scrollTop = messages.scrollHeight /* Scroll to the bottom */
         })
         
         
