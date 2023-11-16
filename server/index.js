@@ -65,7 +65,7 @@ app.get('/login', (req,res) => {
 
 
 app.post('/login', (req,res) => {
-    const users_registered = ["Wilson","Diana","Isabel"]
+    const users_registered = ["Wilson","Diana","Isabel",]
     
   // Extraer parámetros del cuerpo de la solicitud
     const parametro1 = req.body ? req.body.parametro1 : null;
